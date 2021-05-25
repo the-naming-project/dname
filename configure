@@ -1,0 +1,33 @@
+#!/bin/bash
+
+
+# Whenever we "configure" we should idempotently get our /build directory in shape
+echo "Ensuring /build..."
+rm -rf ,/build
+touch ./build/.gitkeep
+
+echo "Creating build..."
+cd build
+echo "cd build"
+cmake ../
+
+
+echo ""
+echo ""
+echo "    ___ __"
+echo "   / (_) /_  ____  ____ _____ ___  ___ "
+echo "  / / / __ \/ __ \/ __  / __ '__ \/ _ \ "
+echo " / / / /_/ / / / / /_/ / / / / / /  __/"
+echo "/_/_/_.___/_/ /_/\__,_/_/ /_/ /_/\___/ "
+echo ""
+echo "            Author: Kris Nóva <kris@nivenly.com>"
+echo "            Version: 0.0.1"
+echo ""
+echo ""
+echo "The library libname is now ready to compile"
+echo ""
+echo "cd build"
+echo "make"
+echo "make clean"
+echo "sudo -E make install"
+echo ""
