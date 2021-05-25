@@ -1,2 +1,3 @@
-# library
-The core C library
+# libname
+
+The core C library, tests, and examples.
