@@ -12,9 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "name.h"
-#include <stdio.h>
-
-void welcome() {
-    printf("Welcome!\n");
-}
+#define VERSION 1.0.0

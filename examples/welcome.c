@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "name.h"
-#include <stdio.h>
 
-void welcome() {
-    printf("Welcome!\n");
+int main() {
+    welcome();
+    return 0;
 }
