@@ -6,6 +6,6 @@ cmake ../
 make
 sudo make install
 cd ..
-cd examples
+cd dname
 make
-./welcome
+./dname

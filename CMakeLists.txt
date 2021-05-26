@@ -14,10 +14,10 @@
 #
 cmake_minimum_required(VERSION 3.9)
 #
-# libname.so
+# libdname.so
 # 0.0.1
 #
-project(name VERSION 0.0.1 DESCRIPTION "Deterministic Naming Library")
+project(dname VERSION 0.0.1 DESCRIPTION "Deterministic Naming Library")
 
 #
 # Literally define the internal source .c files
@@ -26,40 +26,40 @@ project(name VERSION 0.0.1 DESCRIPTION "Deterministic Naming Library")
 # Please list these manually within each pull request.
 #
 # cd src && ls -l *.c
-add_library(name SHARED
-        src/name.c
+add_library(dname SHARED
+        src/dname.c
         src/version.h
         )
 
 #
 # Version of the library properties
 #
-set_target_properties(name PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(dname PROPERTIES VERSION ${PROJECT_VERSION})
 #
 # This is where the magic symlinking in /usr/include comes to play
 #  - libname.1
 #  - libname.0.0.1
 #
-set_target_properties(name PROPERTIES SOVERSION 0.0.1)
+set_target_properties(dname PROPERTIES SOVERSION 0.0.1)
 
 #
 # Public API
 #
 # Everything in /include will be what we expose to a third party
 # application.
-set_target_properties(name PROPERTIES PUBLIC_HEADER include/name.h)
+set_target_properties(dname PROPERTIES PUBLIC_HEADER include/name.h)
 
 # Add the top level directory to make our #include statements cleaner
-target_include_directories(name PRIVATE .)
+target_include_directories(dname PRIVATE .)
 # Add include (public API)
-target_include_directories(name PRIVATE include)
+target_include_directories(dname PRIVATE include)
 # Add src (private implementation)
-target_include_directories(name PRIVATE src)
+target_include_directories(dname PRIVATE src)
 
 # make install
 # Here is the install rule
 include(GNUInstallDirs)
 # This is where we put the shared object on the filesystem
-install(TARGETS name
+install(TARGETS dname
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

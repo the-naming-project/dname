@@ -13,8 +13,27 @@
 // limitations under the License.
 
 #include "name.h"
+#include <stdio.h>
 
-int main() {
-    welcome();
+void usage() {
+    about();
+    printf("\n");
+    printf("Usage:\n");
+    printf("dname [options...] <input>\n");
+    printf("\n");
+}
+
+int main (int argc, char **argv) {
+    if (argc < 2) {
+        usage();
+        return 1;
+    }
+    // input will be the input we will be using for our deterministic
+    // naming.
+    char* input = argv[1];
+    printf("Input: %s\n", input);
+    char* output;
+    output = dname(input);
+    printf("Output: %s\n", output);
     return 0;
 }

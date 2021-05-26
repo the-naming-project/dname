@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+ ifeq (, $(shell which clang))
+ $(error "No clang found. Please install clang for compiling!")
+ endif
+
 CC=clang
-CFLAGS=-I. -lname
-DEPS = welcome.c
-OBJ = welcome.o
+CFLAGS=-I. -ldname
+DEPS = dname.c
+OBJ = dname.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-welcome: $(OBJ) ## Namstring is what does all the final linking
+dname: $(OBJ) ## Generate the main dname program
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:  ## Show help messages for make targets

@@ -18,16 +18,22 @@
 #include <openssl/sha.h>
 
 
+char* dname(char* n) {
+    return "wonderful-name";
+}
 
 
-void welcome() {
-//    printf("----------------------------------------------------------\n");
-//    printf("\n");
-//    printf("  [libname] \n");
-//    printf("  [%s]\n", VERSION);
-//    printf("\n");
-//    printf(" To solve naming things in computer science once and for all.\n");
-//    printf("----------------------------------------------------------\n");
+void about() {
+    printf("---------------------------------------\n");
+    printf("       __        v%s                   \n", VERSION);
+    printf("  ____/ /___  ____ _____ ___  ___      \n");
+    printf(" / __  / __ \\/ __ '/ __ '__ \\/ _ \\  \n");
+    printf("/ /_/ / / / / /_/ / / / / / /  __/     \n");
+    printf("\\__,_/_/ /_/\\__,_/_/ /_/ /_/\\___/   \n");
+    printf("                                       \n");
+    printf("   Author: Kris Nóva <kris@nivenly.com>\n");
+    printf("   Deterministic Naming Library        \n");
+    printf("---------------------------------------\n");
 }
 
 

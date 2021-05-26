@@ -15,6 +15,8 @@
 #ifndef LIBNAME_H
 #define LIBNAME_H
 
-extern void welcome();
+extern void about();
+extern char* dname(char* n);
+
 
 #endif
