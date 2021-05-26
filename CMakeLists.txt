@@ -28,7 +28,7 @@ project(name VERSION 0.0.1 DESCRIPTION "Deterministic Naming Library")
 # cd src && ls -l *.c
 add_library(name SHARED
         src/name.c
-        src/version.c
+        src/version.h
         )
 
 #

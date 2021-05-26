@@ -13,8 +13,21 @@
 // limitations under the License.
 
 #include "name.h"
+#include "version.h"
 #include <stdio.h>
+#include <openssl/sha.h>
+
+
+
 
 void welcome() {
-    printf("Welcome!\n");
+//    printf("----------------------------------------------------------\n");
+//    printf("\n");
+//    printf("  [libname] \n");
+//    printf("  [%s]\n", VERSION);
+//    printf("\n");
+//    printf(" To solve naming things in computer science once and for all.\n");
+//    printf("----------------------------------------------------------\n");
 }
+
+
