@@ -31,3 +31,11 @@ export LD_LIBRARY_PATH=/usr/local/lib
 ./dname <any input>
 make clean
 ```
+
+# Running
+
+```bash
+[nova@emma dname]$ dname boops
+[Input ]: boops
+[Output]: 06afe0c85ac2d2f9463c626ad465e796de3adf91586e2847e484646400000000
+```
