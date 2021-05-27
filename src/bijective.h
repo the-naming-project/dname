@@ -12,25 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "name.h"
-#include <stdio.h>
+#ifndef DNAME_BIJECTIVE_H
+#define DNAME_BIJECTIVE_H
 
-void usage() {
-    about();
-    printf("\n");
-    printf("Usage:\n");
-    printf("dname [options...] <input>\n");
-    printf("\n");
-}
+extern void dname_bijection(struct dname_digest *digest);
 
-int main (int argc, char **argv) {
-    if (argc < 2) {
-        usage();
-        return 1;
-    }
-    char* input = argv[1];
-    struct dname_digest digest;
-    digest = getname(input);
-    dname_pretty_print(&digest);
-    return 0;
-}
+#endif

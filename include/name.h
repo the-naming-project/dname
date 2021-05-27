@@ -12,20 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef LIBNAME_H
-#define LIBNAME_H
+#ifndef LIBDNAME_H
+#define LIBDNAME_H
 
-#define DNAME_SHA256_DIGEST      32
-#define DNAME_SHA256_POINTER     65
-#define DNAME_SHA256_ARRAY       64
+#define DNAME_SHA256_DIGEST_32      32
+#define DNAME_SHA256_ARRAY_64       64
+#define DNAME_SHA256_POINTER_65     65 // 64 + 1 bit for *pointer
+
 
 typedef struct dname_digest {
-    unsigned char sha256hash[DNAME_SHA256_DIGEST];              // 32 bit array
-    unsigned char sha256hash_hexadecimal[DNAME_SHA256_ARRAY];   // 64 bit array
+    char *input;
+    unsigned char sha256hash[DNAME_SHA256_DIGEST_32];              // 32 bit array
+    unsigned char sha256hash_hexadecimal[DNAME_SHA256_ARRAY_64];   // 64 bit array
 } dname_digest;
 
 extern void about();
 extern struct dname_digest getname(char *input);
-
+extern void dname_pretty_print(struct dname_digest *digest);
 
 #endif

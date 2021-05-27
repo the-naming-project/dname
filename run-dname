@@ -7,5 +7,6 @@ make
 sudo make install
 cd ..
 cd dname
+make clean
 make
-./dname "beeps boops"
+./dname "beeps boops beeps"

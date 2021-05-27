@@ -13,10 +13,12 @@
 // limitations under the License.
 
 #include "name.h"
+#include "bijective.h"
 #include "version.h"
 #include <stdio.h>
 #include <openssl/sha.h>
 #include <string.h>
+#include <stdlib.h>
 
 
 // dname_sha256 accepts a pointer to a char and will calculate
@@ -27,7 +29,7 @@
 void dname_sha256(char *input, struct dname_digest *digest) {
 
     // Calculate the SHA256sum of arbitrary input.
-    unsigned char hash[DNAME_SHA256_ARRAY];
+    unsigned char hash[DNAME_SHA256_ARRAY_64];
     SHA256_CTX h;
     SHA224_Init(&h);
     SHA256_Update(&h, input, sizeof input);
@@ -38,15 +40,43 @@ void dname_sha256(char *input, struct dname_digest *digest) {
 
     // System to translate the 32 bit raw hash
     // Into the 65 bit hexadecimal sum.
-    unsigned char hex[DNAME_SHA256_POINTER];
-    for (int i = 0; i < DNAME_SHA256_DIGEST; i++) {
+    unsigned char hex[DNAME_SHA256_POINTER_65];
+    for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
         sprintf(hex + (i * 2), "%02x", hash[i]);
     }
     // Here we pointer index[0] of the 65 bit array
-    // which will give us our DNAME_SHA256_ARRAY (64)
+    // which will give us our DNAME_SHA256_ARRAY_64 (64)
     // bit sum.
     strcpy(digest->sha256hash_hexadecimal, &hex[0]);
 }
+
+void dname_pretty_print(struct dname_digest *digest) {
+    printf("\n\n");
+    printf("Deterministic Name Digest For Input:\n");
+    for (size_t i = 0; i < strlen(digest->input) + 3; i++) {
+        printf("-");
+    }
+    printf("\n");
+    printf("[%s]\n", digest->input);
+    for (size_t i = 0; i < strlen(digest->input) + 3; i++) {
+        printf("-");
+    }
+    printf("\n\n");
+    printf("Memory Address: *%p\n", digest);
+    printf("Value sha256hash unsigned char [32]:\n");
+    printf("   ");
+    for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
+        printf("%02x", digest->sha256hash[i]);
+    }
+    printf("\n");
+    printf("Value sha256hash_hexadecimal unsigned char [64]:\n");
+    printf("   ");
+    for (size_t i = 1; i < DNAME_SHA256_ARRAY_64; i++) {
+        printf("%02x", digest->sha256hash_hexadecimal[i]);
+    }
+    printf("\n");
+}
+
 
 
 // getname()
@@ -55,11 +85,16 @@ void dname_sha256(char *input, struct dname_digest *digest) {
 // based on the given input.
 struct dname_digest getname(char *input) {
     struct dname_digest digest;
+
+    //System to name our digest
+    digest.input = malloc(strlen(input)+1);
+    strcpy(digest.input, input);
     dname_sha256(input, &digest);
+    dname_bijection(&digest);
     return digest;
 }
 
-// about will share information abpout the library.
+// about will share information about the library.
 void about() {
     printf("---------------------------------------\n");
     printf("       __        v%s                   \n", VERSION);

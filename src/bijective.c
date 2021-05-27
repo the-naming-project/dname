@@ -13,24 +13,11 @@
 // limitations under the License.
 
 #include "name.h"
+#include "bijective.h"
 #include <stdio.h>
 
-void usage() {
-    about();
-    printf("\n");
-    printf("Usage:\n");
-    printf("dname [options...] <input>\n");
-    printf("\n");
-}
-
-int main (int argc, char **argv) {
-    if (argc < 2) {
-        usage();
-        return 1;
+void dname_bijection(struct dname_digest *digest) {
+    for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
+       // printf("%d", digest->sha256hash[i]);
     }
-    char* input = argv[1];
-    struct dname_digest digest;
-    digest = getname(input);
-    dname_pretty_print(&digest);
-    return 0;
 }

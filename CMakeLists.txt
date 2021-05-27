@@ -28,6 +28,8 @@ project(dname VERSION 0.0.1 DESCRIPTION "Deterministic Naming Library")
 # cd src && ls -l *.c
 add_library(dname SHARED
         src/dname.c
+        src/bijective.c
+        src/bijective.h
         src/version.h
         )
 
