@@ -15,8 +15,17 @@
 #ifndef LIBNAME_H
 #define LIBNAME_H
 
+#define DNAME_SHA256_DIGEST      32
+#define DNAME_SHA256_POINTER     65
+#define DNAME_SHA256_ARRAY       64
+
+typedef struct dname_digest {
+    unsigned char sha256hash[DNAME_SHA256_DIGEST];              // 32 bit array
+    unsigned char sha256hash_hexadecimal[DNAME_SHA256_ARRAY];   // 64 bit array
+} dname_digest;
+
 extern void about();
-extern char* dname(char* n);
+extern struct dname_digest getname(char *input);
 
 
 #endif

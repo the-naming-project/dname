@@ -6,7 +6,7 @@ Composed of two components
 
  - `libdname.so` The library shared object
  - `dname` The cli executable
-
+    
 # Building libdname.so
 
 To build and install `libdname.so` run the following:

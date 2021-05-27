@@ -16,31 +16,37 @@
 #include "version.h"
 #include <stdio.h>
 #include <openssl/sha.h>
+#include <string.h>
 
-// sha256_input is used to calculate a sha256
-// sum based on a given pointer input.
-char* sha256_input(char *input) {
-    unsigned char hash[SHA256_DIGEST_LENGTH];
-    SHA256_CTX sha256;
-    SHA224_Init(&sha256);
-    SHA256_Update(&sha256, input, sizeof input);
-    SHA256_Final(hash, &sha256);
-    unsigned char outputBuffer[65];
-    size_t i;
-    for (i = 0; i < SHA256_DIGEST_LENGTH; i++) {
-        sprintf(outputBuffer + (i * 2), "%02x", hash[i]);
+void dname_sha256(char *input, struct dname_digest *digest) {
+
+    // Calculate the SHA256sum of arbitrary input.
+    unsigned char hash[DNAME_SHA256_ARRAY];
+    SHA256_CTX h;
+    SHA224_Init(&h);
+    SHA256_Update(&h, input, sizeof input);
+    SHA256_Final(hash, &h);
+
+    // Preserve the original 32 bit hash.
+    strcpy(digest->sha256hash, hash);
+
+    // System to translate the 32 bit raw hash
+    // Into the 65 bit hexadecimal sum.
+    unsigned char hex[DNAME_SHA256_POINTER];
+    for (int i = 0; i < DNAME_SHA256_DIGEST; i++) {
+        sprintf(hex + (i * 2), "%02x", hash[i]);
     }
-    // Take the pointer of the buffer and return
-    char *output = &outputBuffer[0];
-    return output;
+    // Here we pointer index[0] of the 65 bit array
+    // which will give us our DNAME_SHA256_ARRAY (64)
+    // bit sum.
+    strcpy(digest->sha256hash_hexadecimal, &hex[0]);
 }
 
 
-// dname is used to pass in a pointer to a string
-// and receive the deterministic name from the given
-// input.
-char* dname(char *input) {
-    return sha256_input(input);
+struct dname_digest getname(char *input) {
+    struct dname_digest digest;
+    dname_sha256(input, &digest);
+    return digest;
 }
 
 void about() {

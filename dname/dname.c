@@ -32,8 +32,8 @@ int main (int argc, char **argv) {
     // naming.
     char* input = argv[1];
     printf("[Input ]: %s\n", input);
-    char* output;
-    output = dname(input);
-    printf("[Output]: %s\n", output);
+    struct dname_digest digest;
+    digest = getname(input);
+    printf("[Output]: %s\n", digest.sha256hash_hexadecimal);
     return 0;
 }
