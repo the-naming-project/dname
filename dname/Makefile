@@ -31,6 +31,10 @@ clean:  ## Show help messages for make targets
 		rm -rf *.o
 		rm -rf namestring
 
+install:  ## Install dname to /usr/local/bin
+		chmod +x dname
+		cp dname /usr/local/bin/dname
+
 .PHONY: help
 help:  ## Show help messages for make targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}'
