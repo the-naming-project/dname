@@ -17,7 +17,7 @@
  endif
 
 CC=clang
-CFLAGS=-I. -ldname
+CFLAGS=-I. -ldname -lopenssl
 DEPS = dname.c
 OBJ = dname.o
 

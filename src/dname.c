@@ -15,13 +15,24 @@
 #include "name.h"
 #include "version.h"
 #include <stdio.h>
+#include <string.h>
 #include <openssl/sha.h>
 
 
-char* dname(char* n) {
-    return "wonderful-name";
+char* dname(char *input) {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA224_Init(&sha256);
+    SHA256_Update(&sha256, input, sizeof input);
+    SHA256_Final(hash, &sha256);
+    char outputBuffer[65];
+    size_t i;
+    for (i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        sprintf(outputBuffer + (i * 2), "%02x", hash[i]);
+    }
+    char *output = &outputBuffer[0];
+    return output;
 }
-
 
 void about() {
     printf("---------------------------------------\n");

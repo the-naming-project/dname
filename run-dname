@@ -8,4 +8,4 @@ sudo make install
 cd ..
 cd dname
 make
-./dname
+./dname "beeps boops"

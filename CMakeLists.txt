@@ -31,6 +31,9 @@ add_library(dname SHARED
         src/version.h
         )
 
+find_package(OpenSSL REQUIRED)
+target_link_libraries(dname OpenSSL::SSL)
+
 #
 # Version of the library properties
 #
