@@ -28,8 +28,6 @@ int main (int argc, char **argv) {
         usage();
         return 1;
     }
-    // input will be the input we will be using for our deterministic
-    // naming.
     char* input = argv[1];
     printf("[Input ]: %s\n", input);
     struct dname_digest digest;

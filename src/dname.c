@@ -18,6 +18,12 @@
 #include <openssl/sha.h>
 #include <string.h>
 
+
+// dname_sha256 accepts a pointer to a char and will calculate
+// a dname_digest based on sha256.
+//
+// The convention for using other algorithms later will be
+// dname_HASH(char *input, struct dname_digest *digest).
 void dname_sha256(char *input, struct dname_digest *digest) {
 
     // Calculate the SHA256sum of arbitrary input.
@@ -43,12 +49,17 @@ void dname_sha256(char *input, struct dname_digest *digest) {
 }
 
 
+// getname()
+//
+// A determinstic function that will return a unique name digest
+// based on the given input.
 struct dname_digest getname(char *input) {
     struct dname_digest digest;
     dname_sha256(input, &digest);
     return digest;
 }
 
+// about will share information abpout the library.
 void about() {
     printf("---------------------------------------\n");
     printf("       __        v%s                   \n", VERSION);
