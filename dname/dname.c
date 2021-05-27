@@ -31,9 +31,9 @@ int main (int argc, char **argv) {
     // input will be the input we will be using for our deterministic
     // naming.
     char* input = argv[1];
-    printf("Input: %s\n", input);
+    printf("[Input ]: %s\n", input);
     char* output;
     output = dname(input);
-    printf("Output: %s\n", output);
+    printf("[Output]: %s\n", output);
     return 0;
 }

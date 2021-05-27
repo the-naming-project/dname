@@ -1,27 +1,33 @@
-# libname
+# dname
 
-The core C library, tests, and examples.
+The core deterministic naming library.
 
-# Building from source
+Composed of two components
 
-To build and install `libname.so` run the following:
+ - `libdname.so` The library shared object
+ - `dname` The cli executable
+
+# Building libdname.so
+
+To build and install `libdname.so` run the following:
 
 ```bash
-git clone git@github.com:kris-nova/libname
+git clone git@github.com:kris-nova/dname
 ./configure
 cd build
+cmake ..
 make
 sudo make install
 ```
 
-# Example usage
+# Dname
 
 To run an example program using the library
 
 ```bash
-cd examples
+cd dname
 make
 export LD_LIBRARY_PATH=/usr/local/lib
-./namestring
+./dname <any input>
 make clean
 ```

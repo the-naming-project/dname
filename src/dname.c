@@ -15,23 +15,32 @@
 #include "name.h"
 #include "version.h"
 #include <stdio.h>
-#include <string.h>
 #include <openssl/sha.h>
 
-
-char* dname(char *input) {
+// sha256_input is used to calculate a sha256
+// sum based on a given pointer input.
+char* sha256_input(char *input) {
     unsigned char hash[SHA256_DIGEST_LENGTH];
     SHA256_CTX sha256;
     SHA224_Init(&sha256);
     SHA256_Update(&sha256, input, sizeof input);
     SHA256_Final(hash, &sha256);
-    char outputBuffer[65];
+    unsigned char outputBuffer[65];
     size_t i;
     for (i = 0; i < SHA256_DIGEST_LENGTH; i++) {
         sprintf(outputBuffer + (i * 2), "%02x", hash[i]);
     }
+    // Take the pointer of the buffer and return
     char *output = &outputBuffer[0];
     return output;
+}
+
+
+// dname is used to pass in a pointer to a string
+// and receive the deterministic name from the given
+// input.
+char* dname(char *input) {
+    return sha256_input(input);
 }
 
 void about() {
