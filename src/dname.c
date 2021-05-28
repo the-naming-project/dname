@@ -29,7 +29,12 @@
 void dname_sha256(char *input, struct dname_digest *digest) {
 
     // Calculate the SHA256sum of arbitrary input.
-    unsigned char hash[DNAME_SHA256_ARRAY_64];
+
+    // Note: for some reason 25 seems to be the "magic"
+    // size here?
+    //char hash[25];
+    char hash[DNAME_SHA256_POINTER_65];
+
     SHA256_CTX h;
     SHA224_Init(&h);
     SHA256_Update(&h, input, sizeof input);
@@ -37,19 +42,9 @@ void dname_sha256(char *input, struct dname_digest *digest) {
 
     // Preserve the original 32 bit hash.
     strcpy(digest->sha256hash, hash);
-
-    // System to translate the 32 bit raw hash
-    // Into the 65 bit hexadecimal sum.
-    unsigned char hex[DNAME_SHA256_POINTER_65];
-    for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
-        sprintf(hex + (i * 2), "%02x", hash[i]);
-    }
-    // Here we pointer index[0] of the 65 bit array
-    // which will give us our DNAME_SHA256_ARRAY_64 (64)
-    // bit sum.
-    strcpy(digest->sha256hash_hexadecimal, &hex[0]);
 }
 
+// dname_pretty_print will just show the contents of the digest
 void dname_pretty_print(struct dname_digest *digest) {
     printf("\n\n");
     printf("Deterministic Name Digest For Input:\n");
@@ -63,16 +58,26 @@ void dname_pretty_print(struct dname_digest *digest) {
     }
     printf("\n\n");
     printf("Memory Address: *%p\n", digest);
-    printf("Value sha256hash unsigned char [32]:\n");
-    printf("   ");
+    printf("\n");
+
+    // Raw
+    printf("Raw Integer Values:\n");
     for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
-        printf("%02x", digest->sha256hash[i]);
+        printf("%d ", digest->sha256hash[i]);
     }
     printf("\n");
-    printf("Value sha256hash_hexadecimal unsigned char [64]:\n");
-    printf("   ");
-    for (size_t i = 1; i < DNAME_SHA256_ARRAY_64; i++) {
-        printf("%02x", digest->sha256hash_hexadecimal[i]);
+
+    // Hex
+    printf("Hexadecimal Values:\n");
+    for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
+        printf("%x ", digest->sha256hash[i]);
+    }
+    printf("\n");
+
+    // Hex String
+    printf("Hexadecimal:\n");
+    for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
+        printf("%x", digest->sha256hash[i]);
     }
     printf("\n");
 }
@@ -89,7 +94,11 @@ struct dname_digest getname(char *input) {
     //System to name our digest
     digest.input = malloc(strlen(input)+1);
     strcpy(digest.input, input);
+
+    // Deterministic sum with sha256
     dname_sha256(input, &digest);
+
+    // Bijection function
     dname_bijection(&digest);
     return digest;
 }

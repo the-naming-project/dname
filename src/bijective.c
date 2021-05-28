@@ -18,6 +18,14 @@
 
 void dname_bijection(struct dname_digest *digest) {
     for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
-       // printf("%d", digest->sha256hash[i]);
+       printf("%d\n", digest->sha256hash[i]);
     }
+
+
+    // We have 32 integers ( 0 < N < 255 )
+    // We have 8 sets of 256
+    // We get 4 names
+
+
 }
+

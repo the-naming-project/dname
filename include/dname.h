@@ -20,10 +20,10 @@
 #define DNAME_SHA256_POINTER_65     65 // 64 + 1 bit for *pointer
 
 
-typedef struct dname_digest {
+typedef struct dname_undigest {
     char *input;
-    unsigned char sha256hash[DNAME_SHA256_DIGEST_32];              // 32 bit array
-    unsigned char sha256hash_hexadecimal[DNAME_SHA256_ARRAY_64];   // 64 bit array
+    // openssl/sha returns unsigned char
+    unsigned char sha256hash[DNAME_SHA256_DIGEST_32];
 } dname_digest;
 
 extern void about();

@@ -52,7 +52,7 @@ set_target_properties(dname PROPERTIES SOVERSION 0.0.1)
 #
 # Everything in /include will be what we expose to a third party
 # application.
-set_target_properties(dname PROPERTIES PUBLIC_HEADER include/name.h)
+set_target_properties(dname PROPERTIES PUBLIC_HEADER include/dname.h)
 
 # Add the top level directory to make our #include statements cleaner
 target_include_directories(dname PRIVATE .)
