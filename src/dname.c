@@ -80,6 +80,13 @@ void dname_pretty_print(struct dname_digest *digest) {
         printf("%x", digest->sha256hash[i]);
     }
     printf("\n");
+
+    // Name
+    printf("Name:\n");
+    printf("%s\n", digest->name);
+
+    // Fin
+    printf("\n");
 }
 
 

@@ -22,6 +22,7 @@
 
 typedef struct dname_digest {
     char *input;
+    char *name;
     unsigned char sha256hash[DNAME_SHA256_DIGEST_32];
 } dname_digest;
 

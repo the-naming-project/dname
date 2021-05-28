@@ -12,22 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "dname.h"
-#include "bijective.h"
-#include "names.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#ifndef DNAME_NAMES_H
+#define DNAME_NAMES_H
 
-void dname_bijection(struct dname_digest *digest) {
-    int j;
-    char *name = malloc(DNAME_SHA256_DIGEST_32 * DNAME_SHA256_DIGEST_32 + 1);
-    for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
-        j = digest->sha256hash[i];
-        char *n = getnamei(j);
-        sprintf(name,"%s %s", name, n);
-    }
-    digest->name = malloc(DNAME_SHA256_DIGEST_32 * DNAME_SHA256_DIGEST_32 + 1);
-    strcpy(digest->name, name);
-}
+extern char* getnamei(int i);
 
+#endif
