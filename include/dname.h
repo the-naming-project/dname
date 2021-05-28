@@ -22,7 +22,6 @@
 
 typedef struct dname_digest {
     char *input;
-    // openssl/sha returns unsigned char
     unsigned char sha256hash[DNAME_SHA256_DIGEST_32];
 } dname_digest;
 

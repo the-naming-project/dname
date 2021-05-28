@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "name.h"
+#include "dname.h"
 #include "bijective.h"
 #include <stdio.h>
 
 void dname_bijection(struct dname_digest *digest) {
     for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
-       printf("%d\n", digest->sha256hash[i]);
+       //printf("%d\n", digest->sha256hash[i]);
     }
 
 
