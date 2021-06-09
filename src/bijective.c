@@ -22,12 +22,14 @@
 
 // We know that the hash digest is 32 bytes long.
 //
+// 32 bytes * 8 bits = 256 bits
+//
 // 8 Bytes
 // [  0]  [  1]  [  2]  [  3]  [  4]  [  5]  [  6]  [  7]
 // [ 42]  [ 97]  [211]  [ 12]  [217]  [114]  [ 33]  [  8]
 // [255]  [255]  [255]  [255]  [255]  [255]  [255]  [255]
-//
 
+// More notes for consideration: There are 44 sounds in english.
 
 // dname_bijection is a deterministic bijective function
 // for a 32 byte sha256 digest.
@@ -40,9 +42,15 @@ void dname_bijection(struct dname_digest *digest) {
         int ii = i + 1;
         int p;
         p = dname_pair(digest->sha256hash[i], digest->sha256hash[ii]);
+        // 0 >= p >= 130,560
         char *n = getnamei(p);
         //printf("%d\n", p);
-        sprintf(name,"%s %s", name, n);
+        if (strlen(name) == 0) {
+            sprintf(name,"%s", n);
+        }else {
+            sprintf(name,"%s-%s", name, n);
+        }
+
     }
 
     // Copy

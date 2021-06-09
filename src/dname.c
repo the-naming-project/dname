@@ -72,7 +72,7 @@ void dname_pretty_print(struct dname_digest *digest) {
     printf("\n");
 
     // Hex String
-    printf("Hexadecimal:\n");
+    printf("Hexadecimal String:\n");
     for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
         printf("%x", digest->sha256hash[i]);
     }
