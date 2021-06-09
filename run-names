@@ -1,0 +1,5 @@
+#!/bin/bash
+
+while read alpha.txt; do
+   echo -e "\"$FOO\""
+done < inputfile

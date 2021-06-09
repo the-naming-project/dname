@@ -21,11 +21,8 @@
 #include <stdlib.h>
 
 
-// dname_sha256 accepts a pointer to a char and will calculate
-// a dname_digest based on sha256.
-//
-// The convention for using other algorithms later will be
-// dname_HASH(char *input, struct dname_digest *digest).
+// dname_sha256 will only use memory allocation in the openssl
+// libraries and otherwise will be a static memory system.
 void dname_sha256(char *input, struct dname_digest *digest) {
 
     // Calculate the SHA256sum of arbitrary input.
@@ -37,10 +34,10 @@ void dname_sha256(char *input, struct dname_digest *digest) {
 
     SHA256_CTX h;
     SHA224_Init(&h);
-    SHA256_Update(&h, input, sizeof input);
+    SHA256_Update(&h, input, strlen(input)); // Use strlen() instead of sizeof to consider spaces in input
     SHA256_Final(hash, &h);
 
-    // Preserve the original 32 bit hash.
+    // Preserve the original 32 bit hash, without allocating anymore memory.
     strcpy(digest->sha256hash, hash);
 }
 
@@ -91,14 +88,15 @@ void dname_pretty_print(struct dname_digest *digest) {
 
 
 
-// getname()
+// dname()
 //
 // A determinstic function that will return a unique name digest
 // based on the given input.
-struct dname_digest getname(char *input) {
+struct dname_digest dname(char *input) {
     struct dname_digest digest;
 
-    //System to name our digest
+    // System to name our digest
+    // Malloc here for input
     digest.input = malloc(strlen(input)+1);
     strcpy(digest.input, input);
 

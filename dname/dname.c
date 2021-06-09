@@ -30,7 +30,7 @@ int main (int argc, char **argv) {
     }
     char* input = argv[1];
     struct dname_digest digest;
-    digest = getname(input);
+    digest = dname(input);
     dname_pretty_print(&digest);
     return 0;
 }

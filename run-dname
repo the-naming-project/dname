@@ -9,4 +9,4 @@ cd ..
 cd dname
 make clean
 make
-./dname "beeps boops beeps"
+./dname "Hello my name is zach!"

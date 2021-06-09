@@ -16,5 +16,6 @@
 #define DNAME_BIJECTIVE_H
 
 extern void dname_bijection(struct dname_digest *digest);
+extern int dname_pair(int k1, int k2);
 
 #endif
