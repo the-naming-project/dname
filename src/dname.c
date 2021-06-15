@@ -43,8 +43,7 @@ void dname_sha256(char *input, struct dname_digest *digest) {
 
 // dname_pretty_print will just show the contents of the digest
 void dname_pretty_print(struct dname_digest *digest) {
-    printf("\n\n");
-    printf("Deterministic Name Digest For Input:\n");
+    printf("\n");
     for (size_t i = 0; i < strlen(digest->input) + 3; i++) {
         printf("-");
     }

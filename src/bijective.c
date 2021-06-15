@@ -20,37 +20,52 @@
 #include <stdlib.h>
 
 
-// We know that the hash digest is 32 bytes long.
+// -----------------------------------------------------------
+// Each SHA-256 Digest is 32 Bytes ling.
+// 32 Bytes = (32 * 8 bits) = 256 bits = {0,255}
+// 32 Bytes = 8 Bytes * 4 Segments
+// -----------------------------------------------------------
 //
-// 32 bytes * 8 bits = 256 bits
+// [ 8 Bytes ] 1 Segment
+// +---------------------------------------------------------+
+// | [  0]  [  1]  [  2]  [  3]  [  4]  [  5]  [  6]  [  7]  |
+// | [255]  [255]  [255]  [255]  [255]  [255]  [255]  [255]  |
+// | [16^2] [16^2] [16^2] [16^2] [16^2] [16^2] [16^2] [16^2] |
+// | [0F]   [0F]   [0F]   [0F]   [0F]   [0F]   [0F]   [0F]   |
+// +---------------------------------------------------------+
+
+// [8 Bytes] 4 Pairs (1 Pair = 0->130,560)
+// +---------------------------------------------------------+
+// | [  0]  [  1]  [  2]  [  3]  [  4]  [  5]  [  6]  [  7]  |
+// | [0,130560  ]  [0,130560  ]  [0,130560  ]  [0,130560  ]  |
 //
-// 8 Bytes
-// [  0]  [  1]  [  2]  [  3]  [  4]  [  5]  [  6]  [  7]
-// [ 42]  [ 97]  [211]  [ 12]  [217]  [114]  [ 33]  [  8]
-// [255]  [255]  [255]  [255]  [255]  [255]  [255]  [255]
 
-// More notes for consideration: There are 44 sounds in english.
-
-// dname_bijection is a deterministic bijective function
-// for a 32 byte sha256 digest.
-// We need to be VERY careful with memory allocation here
-// so we do not end up with any memory leaks.
+// dname_bijection is a deterministic bijective function for a 32 byte sha256 digest.
+//
+// The bijection works by iterating through 16 pairs of bytes, and then calculating
+// a pairing sum of each. This ensures that each pair has a unique and deterministic
+// sum.
+//
 void dname_bijection(struct dname_digest *digest) {
     int j;
-    char *name = malloc(DNAME_SHA256_DIGEST_32 * DNAME_SHA256_DIGEST_32 + 1);
+    char *name = malloc(DNAME_SHA256_DIGEST_32 * DNAME_SHA256_DIGEST_32 + 1); // 32*32+1 1,024+1
     for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i = i + 2) {
         int ii = i + 1;
         int p;
         p = dname_pair(digest->sha256hash[i], digest->sha256hash[ii]);
-        // 0 >= p >= 130,560
+
+        // Given P, find a name
+        // There will be 16 names
         char *n = getnamei(p);
-        //printf("%d\n", p);
+
+        // String cat the name
+        // TODO use math instead of strings please
+        printf("%d\n", p);
         if (strlen(name) == 0) {
             sprintf(name,"%s", n);
         }else {
             sprintf(name,"%s-%s", name, n);
         }
-
     }
 
     // Copy
@@ -68,9 +83,9 @@ void dname_bijection(struct dname_digest *digest) {
 //  3/2 + 3/2 = 1 + 1 = 2
 //
 // p <= 130,560
-// p = dname_pair(k1, k2)
+// p = dname_pair(i1, i2)
 // 130560 = dname_pair(255, 255)
-int dname_pair(int k1, int k2) {
-    return (k1+k2)*(k1+k2+1)/2 + k2;
+int dname_pair(int i1, int i2) {
+    return (i1+i2) * (i1+i2+1) / 2 + i2;
 }
 
