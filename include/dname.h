@@ -28,6 +28,8 @@ typedef struct dname_digest {
 typedef struct dname_linux_lookup {
     int inContainer;
     char *blockDeviceSerials;
+    char *containerImage;
+    char *containerName;
 } dname_linux_lookup;
 
 extern void about();

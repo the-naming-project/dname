@@ -27,6 +27,8 @@ extern char *dname_linux_string(struct dname_linux_lookup *lookup);
 int in_container();
 char *block_device_serials();
 char* dynamic_file_contents(char *path);
+char *container_name();
+char *container_image();
 char* static_file_contents(char *path, int size);
 
 #endif

@@ -38,6 +38,8 @@ struct dname_linux_lookup linux_lookup() {
   struct dname_linux_lookup lookup;
   lookup.inContainer = in_container();
   lookup.blockDeviceSerials = block_device_serials();
+  lookup.containerImage = container_image();
+  lookup.containerName = container_name();
   return lookup;
 }
 
@@ -54,6 +56,31 @@ char *dname_linux_string(struct dname_linux_lookup *lookup) {
   sprintf(linux_str, "%s-%d", lookup->blockDeviceSerials, lookup->inContainer);
   return linux_str;
 }
+
+/**
+ * container_name()
+ *
+ * If running inside a container will get the container name.
+ *
+ * @return char*
+ */
+char *container_name() {
+    char *name = malloc(512);
+    return name;
+}
+
+/**
+ * container_image()
+ *
+ * If running inside a container will get the container image name.
+ *
+ * @return char*
+ */
+char *container_image() {
+    char *image = malloc(512);
+    return image;
+}
+
 
 /**
  * block_device_serials()
