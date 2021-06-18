@@ -66,6 +66,8 @@ char *block_device_serials() {
     // TODO Left off here.
     // We need to iterate through all the block devices and append
     // the serial numbers together to get our "host".
+    // DNAME_SYS_BLOCK_DEVICES = /sys/blocks
+    sprintf(serials, "%s", "");
     return serials;
 }
 
