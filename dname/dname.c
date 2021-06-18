@@ -134,5 +134,4 @@ int main (int argc, char **argv) {
 
     // Dname
     printf("%s\n", digest.name);
-
 }

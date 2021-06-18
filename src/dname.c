@@ -175,14 +175,12 @@ struct dname_digest dname(char *input) {
 void about() {
     // 80 char width
     printf("********************************************************************************\n");
-    printf("                           __        libdname.so.%s                             \n", VERSION);
-    printf("                      ____/ /___  ____ _____ ___  ___                           \n");
-    printf("                     / __  / __ \\/ __ '/ __ '__ \\/ _ \\                       \n");
-    printf("                    / /_/ / / / / /_/ / / / / / /  __/                          \n");
-    printf("                    \\__,_/_/ /_/\\__,_/_/ /_/ /_/\\___/                        \n");
+    printf("         __                                                                     \n");
+    printf("    ____/ /___  ____ _____ ___  ___      Author: Kris Nóva  <kris@nivenly.com>  \n");
+    printf("   / __  / __ \\/ __ '/ __ '__ \\/ _ \\                                         \n");
+    printf("  / /_/ / / / / /_/ / / / / / /  __/     Deterministic Naming Library           \n");
+    printf("  \\__,_/_/ /_/\\__,_/_/ /_/ /_/\\___/      Compiled for: libdname.so.%s        \n", VERSION);
     printf("                                                                                \n");
-    printf("                       Author: Kris Nóva <kris@nivenly.com>                     \n");
-    printf("                       Deterministic Naming Library                             \n");
     printf("********************************************************************************\n");
     printf("\n");
     printf("DNAME is based on the SHA-256 hashing algorithm. DNAME will calculate a\n");
