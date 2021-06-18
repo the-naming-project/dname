@@ -19,7 +19,6 @@
 #define DNAME_SHA256_ARRAY_64       64
 #define DNAME_SHA256_POINTER_65     65 // 64 + 1 bit for *pointer
 
-
 typedef struct dname_digest {
     char *input;
     char *name;
@@ -35,5 +34,10 @@ extern struct dname_digest dname(char *input);
 extern struct dname_digest dname_lookup();
 extern void dname_pretty_print(struct dname_digest *digest);
 extern void dname_json_print(struct dname_digest *digest);
+
+
+// Linux
+#define DNAME_PROC_1_CGROUP         "/proc/1/cgroup"
+
 
 #endif

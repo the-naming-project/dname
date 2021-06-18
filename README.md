@@ -1,6 +1,9 @@
-# dname
+# dname 0.1.0
 
-The core deterministic naming library.
+Command line tool and shared object that can be used to deterministically calculate an 8 byte hash given an arbitrary input.
+The main library also ships with runtime lookup features that will generate a name based on the state of a linux system at runtime.
+
+Hardware, The state of the kernel, the state of the container, and kubernetes metrics are used to calculate the input for the hash.
 
 Composed of two components
 
