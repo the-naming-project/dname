@@ -28,6 +28,8 @@ typedef struct dname_digest {
 
 extern void about();
 extern struct dname_digest dname(char *input);
+extern struct dname_digest dname_discover();
 extern void dname_pretty_print(struct dname_digest *digest);
+extern void dname_json_print(struct dname_digest *digest);
 
 #endif

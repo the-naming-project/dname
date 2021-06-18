@@ -21,6 +21,8 @@
 
 #include "dname.h"
 
+// 130,560 is the maximum pairing value
+// for a 2 byte pair.
 char names[130560][32] = {
     "aardvark",
     "aardvarks",

@@ -12,12 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+###############################
+set(DNAME_SO_VERSION "0.1.0") #
+###############################
+
+
+
+
 cmake_minimum_required(VERSION 3.9)
-#
-# libdname.so
-# 0.0.1
-#
-project(dname VERSION 0.0.1 DESCRIPTION "Deterministic Naming Library")
+project(dname VERSION ${DNAME_SO_VERSION} DESCRIPTION "Deterministic Naming Library")
 
 #
 # Literally define the internal source .c files
@@ -28,9 +32,11 @@ project(dname VERSION 0.0.1 DESCRIPTION "Deterministic Naming Library")
 # cd src && ls -l *.c
 add_library(dname SHARED
         src/bijective.c
+        src/linux.c
         src/dname.c
         src/names.c
         src/bijective.h
+        src/linux.h
         src/names.h
         src/version.h
         )
@@ -41,13 +47,10 @@ target_link_libraries(dname OpenSSL::SSL)
 #
 # Version of the library properties
 #
-set_target_properties(dname PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(dname PROPERTIES VERSION ${DNAME_SO_VERSION})
 #
 # This is where the magic symlinking in /usr/include comes to play
-#  - libname.1
-#  - libname.0.0.1
-#
-set_target_properties(dname PROPERTIES SOVERSION 0.0.1)
+set_target_properties(dname PROPERTIES SOVERSION ${DNAME_SO_VERSION})
 
 #
 # Public API

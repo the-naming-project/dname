@@ -19,4 +19,10 @@
 //  ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║
 //  ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝
 
-#define VERSION "0.1.0"
+#ifndef DNAME_LINUX_H
+#define DNAME_LINUX_H
+
+//extern void dname_bijection(struct dname_digest *digest);
+//extern int dname_pair(int k1, int k2);
+
+#endif

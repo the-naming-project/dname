@@ -11,9 +11,20 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
+//  ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗
+//  ████╗  ██║██╔═████╗██║   ██║██╔══██╗
+//  ██╔██╗ ██║██║██╔██║██║   ██║███████║
+//  ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║
+//  ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║
+//  ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝
 
 #include "dname.h"
+#include <unistd.h>
 #include <stdio.h>
+#include <string.h>
+// #include <stdbool.h> // TODO use true/false insteadd of 0/1
+
 
 void usage() {
     about();
@@ -21,16 +32,92 @@ void usage() {
     printf("Usage:\n");
     printf("dname [options...] <input>\n");
     printf("\n");
+    printf("[Options]\n");
+    printf("\n");
+    printf("  -h               print the usage and help screen.\n");
+    printf("  -x               print the hexidecimal value of the 32 byte bash.\n");
+    printf("  -j               print the entire digest as JSON to stdout.\n");
+    printf("\n");
+    printf("[Flags]\n");
+    printf("\n");
+    printf("  -s <string>      add an optional salt string to any input.\n");
+    printf("\n");
 }
 
 int main (int argc, char **argv) {
-    if (argc < 2) {
-        usage();
-        return 1;
+    // Flag variables
+    int help = 0;
+    int json = 0;
+    int hex = 0;
+    int invalid = 0;
+    int hasValue = 0;
+    char *input = NULL;
+    char *salt;
+    int option;
+    while (optind < argc) {
+        if ((option = getopt(argc, argv, "hjs:x")) != -1) {
+            switch (option) {
+                case 'h':
+                    usage();
+                    return 1;
+                case 'j':
+                    json = 1;
+                    break;
+                case 'x':
+                    hex = 1;
+                case 's':
+                    salt = optarg;
+                    break;
+                // This is the system to handle missing or incomplete
+                // command line flags.
+                // We only return usage() and let the library echo to stderr.
+                case '?':
+                default:
+                    usage();
+                    return 1;
+            }
+        } else {
+            // This is the system that will handle
+            // command line values other than flags
+            // optind = 0 : dname
+            // optind = 1 : <input>
+            if (optind == 1) {
+                hasValue = 1;
+                input = argv[optind];
+            }
+            optind++;
+
+        }
     }
-    char* input = argv[1];
+
+    // Find the digest based on input
     struct dname_digest digest;
-    digest = dname(input);
-    dname_pretty_print(&digest);
-    return 0;
+    if (hasValue == 0) {
+        // hasValue = FALSE
+        // $ dname [options]
+        digest = dname_discover();
+    } else {
+        // hasValue = TRUE
+        // $ dname [options] <input>
+        digest = dname(input);
+    }
+
+    // JSON
+    if (json == 1) {
+        dname_json_print(&digest);
+        return 0;
+    }
+
+    // Hex
+    if (hex == 1){
+        for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
+            printf("%x", digest.sha256hash[i]);
+        }
+        printf("\n");
+        return 0;
+    }
+
+    // Dname
+    printf("%s\n", digest.name);
+
 }
