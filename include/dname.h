@@ -27,6 +27,7 @@ typedef struct dname_digest {
 
 typedef struct dname_linux_lookup {
     int inContainer;
+    char *blockDeviceSerials;
 } dname_linux_lookup;
 
 extern void about();
@@ -38,6 +39,6 @@ extern void dname_json_print(struct dname_digest *digest);
 
 // Linux
 #define DNAME_PROC_1_CGROUP         "/proc/1/cgroup"
-
+#define DNAME_SYS_BLOCK_DEVICES     "/sys/block"
 
 #endif

@@ -28,13 +28,15 @@
 /**
  * dname_linux_lookup()
  *
- * Will build the struct of parameters we use
+ * Will build the struct of parameters that can be used to identify
+ * a process at runtime.
  *
  * @return
  */
 struct dname_linux_lookup linux_lookup() {
   struct dname_linux_lookup lookup;
   lookup.inContainer = in_container();
+  lookup.blockDeviceSerials = block_device_serials();
   return lookup;
 }
 
@@ -44,12 +46,27 @@ struct dname_linux_lookup linux_lookup() {
  * Will get the string we use to identify this particular instance of dname()
  *
  * @param lookup
- * @return
+ * @return char*
  */
 char *dname_linux_string(struct dname_linux_lookup *lookup) {
   char *linux_str = malloc(1024);
-  sprintf(linux_str, "%d", lookup->inContainer);
+  sprintf(linux_str, "%s-%d", lookup->blockDeviceSerials, lookup->inContainer);
   return linux_str;
+}
+
+/**
+ * block_device_serials()
+ *
+ * Will create a unique string based on the block devices on the host.
+ *
+ * @return char*
+ */
+char *block_device_serials() {
+    char *serials = malloc(1024);
+    // TODO Left off here.
+    // We need to iterate through all the block devices and append
+    // the serial numbers together to get our "host".
+    return serials;
 }
 
 
@@ -124,8 +141,6 @@ char *dynamic_file_contents(char *path) {
     fseek(file, 0, SEEK_END);
     size = ftell(file);
     rewind(file);
-
-    printf("%d\n", size);
 
     char *content = (char *) malloc(size);
     if(!content) {
