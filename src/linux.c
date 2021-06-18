@@ -58,16 +58,16 @@ char *dname_linux_string(struct dname_linux_lookup *lookup) {
 /**
  * block_device_serials()
  *
- * Will create a unique string based on the block devices on the host.
+ * Will create a unique string based on the block device serial numbers on the host.
+ *
+ * Note: This will cause a new name to be given if a machine has had new physical volumes
+ * installed, changed, or mutated!
  *
  * @return char*
  */
 char *block_device_serials() {
+    // We can check /sys/block for block device details (this is where lsblock looks)
     char *serials = malloc(512);
-    // TODO Left off here.
-    // We need to iterate through all the block devices and append
-    // the serial numbers together to get our "host".
-    // DNAME_SYS_BLOCK_DEVICES = /sys/blocks
     DIR *dir;
     struct dirent *dp;
     dir = opendir(DNAME_SYS_BLOCK_DEVICES);
