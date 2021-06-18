@@ -11,10 +11,18 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
+//  ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗
+//  ████╗  ██║██╔═████╗██║   ██║██╔══██╗
+//  ██╔██╗ ██║██║██╔██║██║   ██║███████║
+//  ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║
+//  ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║
+//  ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝
 
 #ifndef DNAME_NAMES_H
 #define DNAME_NAMES_H
 
 extern char* getnamei(int i);
+extern char* getchari(int i);
 
 #endif
