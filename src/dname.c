@@ -21,6 +21,7 @@
 
 #include "dname.h"
 #include "bijective.h"
+#include "linux.h"
 #include "version.h"
 #include <stdio.h>
 #include <openssl/sha.h>
@@ -28,8 +29,15 @@
 #include <stdlib.h>
 
 
-// dname_sha256 will only use memory allocation in the openssl
-// libraries and otherwise will be a static memory system.
+/**
+ * dname_sha256(*input, *dname_digest)
+ *
+ * A memory safe (65 bits) function that can be used to calculate
+ * a sha256() based on an arbitrary input.
+ *
+ * @param input
+ * @param digest
+ */
 void dname_sha256(char *input, struct dname_digest *digest) {
     // Calculate the SHA256sum of arbitrary input.
     char hash[DNAME_SHA256_POINTER_65];
@@ -42,7 +50,13 @@ void dname_sha256(char *input, struct dname_digest *digest) {
     strcpy(digest->sha256hash, hash);
 }
 
-// dname_json_print will json print the digest
+/**
+ * dname_json_print(*dname_digest)
+ *
+ * Will JSON print the values of a dname_digest.
+ *
+ * @param digest
+ */
 void dname_json_print(struct dname_digest *digest) {
     printf("{\n");
     printf("\t\"input\": \"%s\",\n", digest->input);
@@ -56,7 +70,13 @@ void dname_json_print(struct dname_digest *digest) {
 }
 
 
-// dname_pretty_print will just show the contents of the digest
+/**
+ * dname_pretty_print(*dname_digest)
+ *
+ * Will pretty print the values of a dname_digest.
+ *
+ * @param *digest
+ */
 void dname_pretty_print(struct dname_digest *digest) {
     printf("\n");
     for (size_t i = 0; i < strlen(digest->input) + 3; i++) {
@@ -98,16 +118,38 @@ void dname_pretty_print(struct dname_digest *digest) {
 
 }
 
-struct dname_digest dname_discover() {
+/**
+ * dname_lookup()
+ *
+ * Will attempt to discover a runtime input to use to calculate
+ * a dname() with.
+ *
+ * This component is designed to be deterministic in nature based
+ * on information found in /proc. That is to say, if the same components
+ * in /proc are found the same name will be returned.
+ *
+ * Ensuring that the values read from /proc is deterministic and that
+ * the dname will be the same across different environments is complicated.
+ *
+ * Ye be warned.
+ *
+ * @return dname_digest
+ */
+struct dname_digest dname_lookup() {
+    dname_linux_lookup lookup = linux_lookup();
     return dname("");
 }
 
 
 
-// dname()
-//
-// A determinstic function that will return a unique name digest
-// based on the given input.
+/**
+ * dname()
+ *
+ * Given an arbitrary input, calculate the SHA-256 hash and an 8 byte truncated name.
+ *
+ * @param input
+ * @return dname_digest
+ */
 struct dname_digest dname(char *input) {
     struct dname_digest digest;
 
@@ -124,7 +166,12 @@ struct dname_digest dname(char *input) {
     return digest;
 }
 
-// about will share information about the library.
+/**
+ * about()
+ *
+ * The main banner for any dname CLI tool.
+ * Includes the VERSION number of the shared object.
+ */
 void about() {
     // 80 char width
     printf("********************************************************************************\n");
@@ -144,7 +191,7 @@ void about() {
     printf("of the linux filesystem (/proc) at runtime.\n");
     printf("DNAME will return a deterministic name based on several variables.\n");
     printf("See github.com/the-naming-project/dname for more details on what DNAME uses to\n");
-    printf("discover an input.\n");
+    printf("lookup an input.\n");
 }
 
 

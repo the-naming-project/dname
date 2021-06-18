@@ -84,10 +84,10 @@ int main (int argc, char **argv) {
             if (optind == 1) {
                 hasValue = 1;
                 input = argv[optind];
+                optind++;
             }
-            optind++;
-
         }
+        optind++;
     }
 
     // Find the digest based on input
@@ -95,7 +95,7 @@ int main (int argc, char **argv) {
     if (hasValue == 0) {
         // hasValue = FALSE
         // $ dname [options]
-        digest = dname_discover();
+        digest = dname_lookup();
     } else {
         // hasValue = TRUE
         // $ dname [options] <input>

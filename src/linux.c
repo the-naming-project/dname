@@ -20,3 +20,10 @@
 //  ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝
 
 #include "linux.h"
+#include "dname.h"
+
+struct dname_linux_lookup linux_lookup() {
+    struct dname_linux_lookup lookup;
+    //
+    return lookup;
+}

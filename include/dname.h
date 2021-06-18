@@ -26,9 +26,13 @@ typedef struct dname_digest {
     unsigned char sha256hash[DNAME_SHA256_DIGEST_32];
 } dname_digest;
 
+typedef struct dname_linux_lookup {
+    int inContainer;
+} dname_linux_lookup;
+
 extern void about();
 extern struct dname_digest dname(char *input);
-extern struct dname_digest dname_discover();
+extern struct dname_digest dname_lookup();
 extern void dname_pretty_print(struct dname_digest *digest);
 extern void dname_json_print(struct dname_digest *digest);
 

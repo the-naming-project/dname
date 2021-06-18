@@ -22,7 +22,6 @@
 #ifndef DNAME_LINUX_H
 #define DNAME_LINUX_H
 
-//extern void dname_bijection(struct dname_digest *digest);
-//extern int dname_pair(int k1, int k2);
+extern struct dname_linux_lookup linux_lookup();
 
 #endif
