@@ -23,5 +23,6 @@
 #define DNAME_LINUX_H
 
 extern struct dname_linux_lookup linux_lookup();
+extern char* dname_linux_string(struct dname_linux_lookup *lookup);
 
 #endif

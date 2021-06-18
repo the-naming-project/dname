@@ -27,3 +27,9 @@ struct dname_linux_lookup linux_lookup() {
     //
     return lookup;
 }
+
+char* dname_linux_string(struct dname_linux_lookup *lookup) {
+    char *linux_str;
+    // sprintf() onto linux_str from /proc here
+    return linux_str;
+}

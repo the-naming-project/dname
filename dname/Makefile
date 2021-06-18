@@ -29,7 +29,7 @@ dname: $(OBJ) ## Generate the main dname program
 
 clean:  ## Show help messages for make targets
 		rm -rf *.o
-		rm -rf namestring
+		rm -rf dname
 
 install:  ## Install dname to /usr/local/bin
 		chmod +x dname

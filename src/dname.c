@@ -137,7 +137,7 @@ void dname_pretty_print(struct dname_digest *digest) {
  */
 struct dname_digest dname_lookup() {
     dname_linux_lookup lookup = linux_lookup();
-    return dname("");
+    return dname(dname_linux_string(&lookup));
 }
 
 
