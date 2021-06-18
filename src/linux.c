@@ -22,6 +22,7 @@
 #include "linux.h"
 #include "dname.h"
 #include "stdio.h"
+#include <dirent.h>
 #include <malloc.h>
 #include <string.h>
 
@@ -62,12 +63,41 @@ char *dname_linux_string(struct dname_linux_lookup *lookup) {
  * @return char*
  */
 char *block_device_serials() {
-    char *serials = malloc(1024);
+    char *serials = malloc(512);
     // TODO Left off here.
     // We need to iterate through all the block devices and append
     // the serial numbers together to get our "host".
     // DNAME_SYS_BLOCK_DEVICES = /sys/blocks
-    sprintf(serials, "%s", "");
+    DIR *dir;
+    struct dirent *dp;
+    dir = opendir(DNAME_SYS_BLOCK_DEVICES);
+    if (dir != NULL) {
+        while (dp = readdir(dir)){
+            if (dp->d_name[0] == '.') {
+                continue;
+            }
+            char *subpath = malloc(256);
+            sprintf(subpath, "%s/%s/device/serial", DNAME_SYS_BLOCK_DEVICES, dp->d_name);
+            char *serial = static_file_contents(subpath, 256);
+            if (serial == NULL) {
+                continue;
+            }
+            if (strlen(serials) == 0){
+                sprintf(serials, "%s", serial);
+            }else {
+                sprintf(serials, "%s-%s", serials, serial);
+            }
+            free(subpath);
+            free(serial);
+        }
+        closedir(dir);
+    }
+    else {
+        fputs("Unable to open /sys/block for hardware information.\n", stderr);
+        return serials;
+    }
+
+    // Keep things deterministic
     return serials;
 }
 
@@ -84,7 +114,7 @@ int in_container() {
     //
     //      host:    0::/init.scope
     // container:    0::/
-    char *pid1cgroup = proc_file_contents(DNAME_PROC_1_CGROUP, 1024);
+    char *pid1cgroup = static_file_contents(DNAME_PROC_1_CGROUP, 1024);
     for (int i = 0; i < 1024; i = i + 2) {
         // Ascii Chars
         // -----------
@@ -101,11 +131,11 @@ int in_container() {
 }
 
 /**
- * proc_file_contents()
+ * static_file_contents()
  *
  * Get the content of a /proc file by size.
  *
- * Proc on linux is a bit tricky, we are unable to use clever
+ * /proc and /sys on linux is a bit tricky, we are unable to use clever
  * dynamic tricks like we can on regular files. So we simplify
  * the problem and just make the user pass in a buffer size to
  * read.
@@ -114,7 +144,7 @@ int in_container() {
  * @param int size
  * @return char*
  */
-char *proc_file_contents(char *path, int size) {
+char *static_file_contents(char *path, int size) {
     char *buffer = malloc(size);
     FILE *fd=fopen(path,"r");
     fgets(buffer,size,fd);
@@ -134,7 +164,7 @@ char *dynamic_file_contents(char *path) {
     long int size = 0;
     FILE *file = fopen(path, "r");
     if(!file) {
-        fputs("Unable to open file\n", stderr);
+        //fputs("Unable to open file\n", stderr);
         return NULL;
     }
 
@@ -146,13 +176,13 @@ char *dynamic_file_contents(char *path) {
 
     char *content = (char *) malloc(size);
     if(!content) {
-        fputs("Memory error.\n", stderr);
+        //fputs("Memory error.\n", stderr);
         fclose(file);
         return NULL;
     }
 
     if(fread(content, 1, size, file) != size) {
-        fputs("Read error.\n", stderr);
+        //fputs("Read error.\n", stderr);
         fclose(file);
         return NULL;
     }
