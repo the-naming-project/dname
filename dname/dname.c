@@ -44,8 +44,20 @@ void usage() {
     printf("\n");
 }
 
+/**
+ * main()
+ *
+ * The main entrypoint of the dname command line tool.
+ *
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main (int argc, char **argv) {
-    // Flag variables
+
+    // --------------------------
+    // [Options]
+    //
     int help = 0;
     int json = 0;
     int hex = 0;
@@ -54,6 +66,9 @@ int main (int argc, char **argv) {
     char *input = NULL;
     char *salt;
     int option;
+    //
+    // --------------------------
+
     while (optind < argc) {
         if ((option = getopt(argc, argv, "hjs:x")) != -1) {
             switch (option) {
