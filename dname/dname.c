@@ -87,6 +87,7 @@ int main (int argc, char **argv) {
                     break;
                 case 'x':
                     hex = 1;
+                    break;
                 // This is the system to handle missing or incomplete
                 // command line flags.
                 // We only return usage() and let the library echo to stderr.
