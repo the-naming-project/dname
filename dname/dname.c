@@ -35,8 +35,9 @@ void usage() {
     printf("[Options]\n");
     printf("\n");
     printf("  -h               print the usage and help screen.\n");
-    printf("  -x               print the hexidecimal value of the 32 byte bash.\n");
     printf("  -j               print the entire digest as JSON to stdout.\n");
+    printf("  -r               print the raw value discovered at runtime based on the state of the system.\n");
+    printf("  -x               print the hexadecimal value of the 32 byte bash.\n");
     printf("\n");
     printf("[Flags]\n");
     printf("\n");
@@ -71,21 +72,21 @@ int main (int argc, char **argv) {
     // --------------------------
 
     while (optind < argc) {
-        if ((option = getopt(argc, argv, "hjrs:x")) != -1) {
+        if ((option = getopt(argc, argv, "hjrx")) != -1) {
             switch (option) {
                 case 'h':
                     usage();
                     return 1;
-                case 'r':
-                    raw = 1;
                 case 'j':
                     json = 1;
                     break;
-                case 'x':
-                    hex = 1;
+                case 'r':
+                    raw = 1;
                 case 's':
                     salt = optarg;
                     break;
+                case 'x':
+                    hex = 1;
                 // This is the system to handle missing or incomplete
                 // command line flags.
                 // We only return usage() and let the library echo to stderr.
