@@ -124,6 +124,10 @@ char *block_device_serials() {
         return serials;
     }
 
+    // Strip
+    strip(serials, '\n');
+    strip(serials, ' ');
+
     // Keep things deterministic
     return serials;
 }
@@ -216,4 +220,22 @@ char *dynamic_file_contents(char *path) {
 
     fclose(file);
     return content;
+}
+
+int strip(char *dest, char c) {
+    int removed=0;
+    char *tmp;
+    while (*dest) {
+        tmp=strchr(dest,c);
+        if (NULL==tmp) {
+            break;
+        } else {
+            size_t len=strlen(tmp+1);
+            memmove(tmp,tmp+1,len);
+            tmp[len]=0;
+            ++removed;
+            dest=tmp;
+        }
+    }
+    return removed;
 }

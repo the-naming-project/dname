@@ -30,5 +30,5 @@ char* dynamic_file_contents(char *path);
 char *container_name();
 char *container_image();
 char* static_file_contents(char *path, int size);
-
+int strip(char *dest, char c);
 #endif

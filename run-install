@@ -1,0 +1,12 @@
+#!/bin/bash
+cd build
+rm -rf *
+cmake ../
+make clean
+make
+sudo make install
+cd ..
+cd dname
+make clean
+make
+sudo make install

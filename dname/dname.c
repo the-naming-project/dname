@@ -61,6 +61,7 @@ int main (int argc, char **argv) {
     int help = 0;
     int json = 0;
     int hex = 0;
+    int raw = 0;
     int invalid = 0;
     int hasValue = 0;
     char *input = NULL;
@@ -70,11 +71,13 @@ int main (int argc, char **argv) {
     // --------------------------
 
     while (optind < argc) {
-        if ((option = getopt(argc, argv, "hjs:x")) != -1) {
+        if ((option = getopt(argc, argv, "hjrs:x")) != -1) {
             switch (option) {
                 case 'h':
                     usage();
                     return 1;
+                case 'r':
+                    raw = 1;
                 case 'j':
                     json = 1;
                     break;
@@ -110,6 +113,11 @@ int main (int argc, char **argv) {
     if (hasValue == 0) {
         // hasValue = FALSE
         // $ dname [options]
+        if (raw == 1) {
+            char *raw = dname_lookup_raw();
+            printf("%s\n", raw);
+            return 0;
+        }
         digest = dname_lookup();
     } else {
         // hasValue = TRUE

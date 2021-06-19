@@ -140,6 +140,18 @@ struct dname_digest dname_lookup() {
     return dname(dname_linux_string(&lookup));
 }
 
+/**
+ * dname_lookup_raw()
+ *
+ * Will return the raw string that is calculated at runtime.
+ *
+ * @return
+ */
+char *dname_lookup_raw() {
+    dname_linux_lookup lookup = linux_lookup();
+    return dname_linux_string(&lookup);
+}
+
 
 
 /**
