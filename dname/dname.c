@@ -20,9 +20,11 @@
 //  ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝
 
 #include "dname.h"
-#include <unistd.h>
+#include <malloc.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+
 // #include <stdbool.h> // TODO use true/false insteadd of 0/1
 
 
@@ -35,8 +37,9 @@ void usage() {
     printf("[Options]\n");
     printf("\n");
     printf("  -h               print the usage and help screen.\n");
-    printf("  -x               print the hexidecimal value of the 32 byte bash.\n");
     printf("  -j               print the entire digest as JSON to stdout.\n");
+    printf("  -l               show the linux discovered string.\n");
+    printf("  -x               print the hexidecimal value of the 32 byte bash.\n");
     printf("\n");
     printf("[Flags]\n");
     printf("\n");
@@ -59,6 +62,7 @@ int main (int argc, char **argv) {
     // [Options]
     //
     int help = 0;
+    int discover = 0;
     int json = 0;
     int hex = 0;
     int invalid = 0;
@@ -70,13 +74,16 @@ int main (int argc, char **argv) {
     // --------------------------
 
     while (optind < argc) {
-        if ((option = getopt(argc, argv, "hjs:x")) != -1) {
+        if ((option = getopt(argc, argv, "hjls:x")) != -1) {
             switch (option) {
                 case 'h':
                     usage();
                     return 1;
                 case 'j':
                     json = 1;
+                    break;
+                case 'l':
+                    discover = 1;
                     break;
                 case 'x':
                     hex = 1;
@@ -110,6 +117,12 @@ int main (int argc, char **argv) {
     if (hasValue == 0) {
         // hasValue = FALSE
         // $ dname [options]
+        if (discover) {
+            char *l = malloc(256);
+            l = dname_lookup_string();
+            printf("%s\n", l);
+            return 0;
+        }
         digest = dname_lookup();
     } else {
         // hasValue = TRUE

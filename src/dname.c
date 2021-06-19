@@ -23,8 +23,8 @@
 #include "bijective.h"
 #include "linux.h"
 #include "version.h"
-#include <stdio.h>
 #include <openssl/sha.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -138,6 +138,19 @@ void dname_pretty_print(struct dname_digest *digest) {
 struct dname_digest dname_lookup() {
     dname_linux_lookup lookup = linux_lookup();
     return dname(dname_linux_string(&lookup));
+}
+
+/**
+ * dname_lookup_string()
+ *
+ * Will return the string typically used to hash that is
+ * propagated at runtime.
+ *
+ * @return
+ */
+char *dname_lookup_string() {
+    dname_linux_lookup lookup = linux_lookup();
+    return dname_linux_string(&lookup);
 }
 
 

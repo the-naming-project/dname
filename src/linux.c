@@ -124,6 +124,8 @@ char *block_device_serials() {
         return serials;
     }
 
+    remove_newline(serials);
+
     // Keep things deterministic
     return serials;
 }
@@ -216,4 +218,16 @@ char *dynamic_file_contents(char *path) {
 
     fclose(file);
     return content;
+}
+
+/**
+ * remove_newline()
+ *
+ * Used to remove \n and \r from a string
+ *
+ * @param s
+ */
+void remove_newline(char *s) {
+    while(*s && *s != '\n' && *s != '\r') s++;
+    *s = 0;
 }
