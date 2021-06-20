@@ -1,4 +1,4 @@
-# dname 0.1.0
+# dname 0.1.2
 
 Command line tool and shared object that can be used to deterministically calculate an 8 byte hash given an arbitrary input.
 The main library also ships with runtime lookup features that will generate a name based on the state of a linux system at runtime.
@@ -40,4 +40,13 @@ make clean
 ```bash
 [nova@emma dname]$ dname foxy
 catnip-chiropractor-hayed-carpentered
+[nova@emma dname]$ dname
+estrus-ferrum-alexandr-slosh
+[nova@emma dname]$ dname -j
+{
+        "input": "2019B9803731-0",
+        "name": "estrus-ferrum-alexandr-slosh",
+        "hex": "5daec0552d19dcf656291a68b4b64abcf953da09c3cfcca37771ffffffff"
+}
+[nova@emma dname]$
 ```
