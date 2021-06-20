@@ -61,12 +61,13 @@ void dname_json_print(struct dname_digest *digest) {
     printf("{\n");
     printf("\t\"input\": \"%s\",\n", digest->input);
     printf("\t\"name\": \"%s\",\n", digest->name);
-    char *hash = malloc(DNAME_SHA256_DIGEST_32);
-    for (size_t i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
+    char hash[64] = "";
+    for (int i = 0; i < DNAME_SHA256_DIGEST_32; i++) {
         sprintf(hash,"%s%x", hash, digest->sha256hash[i]);
     }
     printf("\t\"hex\": \"%s\"\n", hash); // No trailing comma!
     printf("}\n");
+
 }
 
 

@@ -229,6 +229,15 @@ char *dynamic_file_contents(char *path) {
     return content;
 }
 
+/**
+ * strip()
+ *
+ * Remove a character from a string.
+ *
+ * @param dest
+ * @param c
+ * @return
+ */
 int strip(char *dest, char c) {
     int removed=0;
     char *tmp;
