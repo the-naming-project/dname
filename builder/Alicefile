@@ -1,0 +1,6 @@
+#!/bin/bash
+REPO="krisnova"
+NAME="dname-builder"
+TAG="latest"
+SHA="$(git rev-parse HEAD)"
+

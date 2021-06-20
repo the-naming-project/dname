@@ -146,15 +146,22 @@ int in_container() {
     //      host:    0::/init.scope
     // container:    0::/
     char *pid1cgroup = static_file_contents(DNAME_PROC_1_CGROUP, 1024);
-    for (int i = 0; i < 1024; i = i + 2) {
+    for (int i = 0; i < 1024; i = i + 1) {
         // Ascii Chars
         // -----------
-        // 10  |  "/"
-        // 0   |  " "
+        // 47  |  "/"
+        // 10  |  "LF" Line Feed
+        // 0   |  "NULL"
         // -----------
+        //printf("%d %d \n", pid1cgroup[i - 1], pid1cgroup[i]);
 
-        // Once we hit an empty char, check if the char before is a slash
-        if (pid1cgroup[i] == 0 && pid1cgroup[i - 1] == 10 ){
+
+        // Check if the last two bits are "/" and "NULL"
+        if (pid1cgroup[i - 1] == 47 && pid1cgroup[i] == 10 ){
+            return 1;
+        }
+        // Check if the last two bits are "/" and "LF"
+        if (pid1cgroup[i - 1] == 47 && pid1cgroup[i] == 0 ){
             return 1;
         }
     }
